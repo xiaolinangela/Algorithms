@@ -1,6 +1,7 @@
 from sys import argv
 import math
 import sys
+# set a global counter
 inv_count = 0
 def inversions(numbers):
     # establish the base case
@@ -10,33 +11,33 @@ def inversions(numbers):
         if numbers[0] < numbers[1]:
             new_numbers.append(numbers[0])
             new_numbers.append(numbers[1])
-            #print(new_numbers, count)
-            return new_numbers, inv_count
+            return new_numbers
         elif numbers[0] > numbers[1]:
             new_numbers.append(numbers[1])
             new_numbers.append(numbers[0])
+            # count inversions
             inv_count += 1
-            #print(inv_count)
-            return new_numbers, inv_count
+            return new_numbers
     elif len(numbers) == 1:
         new_numbers = []
         new_numbers.append(numbers[0])
-        return new_numbers, inv_count
+        return new_numbers
 
     else:
-        first_half = inversions(numbers[0:math.ceil(len(numbers) / 2)])[0]
-        second_half = inversions(numbers[math.ceil(len(numbers) / 2):])[0]
+        first_half = inversions(numbers[0:math.ceil(len(numbers) / 2)])
+        second_half = inversions(numbers[math.ceil(len(numbers) / 2):])
         i = j = k = 0
         results = [0] * len(numbers)
+        # merge two arrays 
         while i < len(first_half) and j < len(second_half):
             if first_half[i] < second_half[j]:
                 results[k] = first_half[i]
                 i += 1
             elif first_half[i] > second_half[j]:
+            	# count the split inversions 
                 inv_count = inv_count + len(first_half) - i
                 results[k] = second_half[j]
                 j += 1
-                #print(inv_count)
             k += 1
         while i < len(first_half):
             results[k] = first_half[i]
@@ -46,8 +47,7 @@ def inversions(numbers):
             results[k] = second_half[j]
             j += 1
             k += 1
-        #print(results)
-    return results, inv_count
+    return results
 
 
 def main():
@@ -60,9 +60,7 @@ def main():
                 numbers.append(line.rstrip("\n"))
         # convert strings to numbers
         numbers = [int(i) for i in numbers]
-        # print(numbers)
         i = numbers[0]
-        # print(type(i))
         # call the inversion function
         inversions(numbers)
         print(inv_count)

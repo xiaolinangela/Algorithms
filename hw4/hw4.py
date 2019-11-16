@@ -7,7 +7,7 @@ g = {}
 def kargerMinCut(g):
 	while len(g) > 2:
 		#Selecting a random vertex
-		u = choice(g.keys())
+		u = choice(list(g.keys()))
 		gu = g[u]
 		#Selecting most comman vertex among the previously chosen random vertex
 		v = gu.most_common(1)[0][0]
@@ -23,13 +23,14 @@ def kargerMinCut(g):
 			gw = g[w]
 			gw[u] += gw[v]
 			del gw[v]
-	return g.itervalues().next().most_common(1)[0][1]
+	return next(g.values().most_common((1)[0][1]))
 
 with open('kargerMinCut.txt', 'r') as graphInput:
 	for line in graphInput:
 		ints = [int(x) for x in line.split()]
 		g[ints[0]] = Counter(ints[1:])
+	print(g)
 
 cuts = [kargerMinCut(deepcopy(g)) for x in range(5)]
 
-print min(cuts), cuts
+print(min(cuts), cuts)

@@ -65,7 +65,6 @@ def main():
 		with open(text_file, 'r') as file:
 			for line in file: 
 				numbers.append(int(line.rstrip("\n")))
-		#print(numbers)
 		medianheap(numbers)
 		#print(sum_medians)
 	else:

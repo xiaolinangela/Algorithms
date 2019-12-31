@@ -10,7 +10,6 @@ def prim(graph, graph_info):
 	vertices = [] #a heap structure
 	key = {} #store the edge_cost 
 	source = random.randint(1,num_vertices) #randomly choose a source
-	#source = 1
 	Tree = []
 	introduced = {} #vertex with edges that introduced to its minimum edge cost 
 	unexplored = list(range(1,num_vertices+1)) #keep track of unexplored vertex
@@ -24,11 +23,7 @@ def prim(graph, graph_info):
 	#print(vertices)
 	while vertices: #until vertices is empty 
 		w = heapq.heappop(vertices)[1] #remove the minimum edge cost from the heap structure, and store the vertext as w
-		#print(w)
 		unexplored.remove(w) 
-		#print(unexplored)
-		#print(w)
-		#print(vertices)
 		if w == source: 
 			introduced[w] = None
 		else: 
@@ -37,11 +32,11 @@ def prim(graph, graph_info):
 		for neighbor in graph[w]:
 			if neighbor in unexplored: 
 				for vertex in vertices:
-					if vertex[1] == neighbor:
-						if graph[w][neighbor] < vertex[0]:
-							vertex[0] = graph[w][neighbor]
-							introduced[neighbor] = w, neighbor #update vertex's edge 
+					if vertex[1] == neighbor and graph[w][neighbor] < vertex[0]:
+						vertex[0] = graph[w][neighbor]
+						introduced[neighbor] = w, neighbor #update vertex's edge 
 			heapq.heapify(vertices)
+
 		#print(vertices)
 	total_cost = 0
 	for i in Tree:

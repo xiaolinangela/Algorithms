@@ -16,6 +16,7 @@ def dijkstra(graph, source, finish):
 		else:
 			distance[vertex] = sys.maxsize #set all the other vertext distance as infinity
 			heapq.heappush(nodes, [distance[vertex], vertex])
+	print(nodes)
 	previous[vertex] = None 
 
 	while nodes: 

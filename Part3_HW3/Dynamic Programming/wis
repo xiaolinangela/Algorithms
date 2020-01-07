@@ -1,0 +1,48 @@
+import sys
+from itertools import islice
+def wis(weight):
+    len_weight = len(weight)
+    array = []
+    index = 0
+    while index < len_weight:
+        array.append(0)
+        index = index + 1
+    array[1] = weight[1]
+    node = [[0],[1]]
+    for i in range(2, len_weight):
+        #array[i] = max(array[i-1], array[i-2] + weight[i])
+        if array[i-1] > (array[i-2] + weight[i]):
+            array[i] = array[i-1]
+            existing_node = node[i-1].copy()
+            node.append(existing_node)
+        else:
+            array[i] = array[i-2] + weight[i]
+            existing_node_1 = node[i-2].copy()
+            existing_node_1.append(i)
+            node.append(existing_node_1)
+    #print(node[len_weight-1])
+    #print(array)
+    return node[len_weight-1]
+
+def main():
+    if len(sys.argv) == 2:
+        txt = sys.argv[1]
+        weight = [0]
+        with open(txt, 'r') as f:
+            for line in islice(f, 1, None):
+                weight.append(int(line.rstrip("/n")))
+        result_set = wis(weight)
+        vertices = [1, 2, 3, 4, 17, 117, 517, 997]
+        result = []
+        for item in vertices:
+            if item in result_set:
+                result.append(1)
+            if item not in result_set:
+                result.append(0)
+        print(result)
+
+    else:
+        print("error")
+
+if __name__ == "__main__":
+    main()

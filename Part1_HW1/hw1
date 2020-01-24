@@ -1,0 +1,47 @@
+import math
+
+def karatsuba(num_1, num_2):
+    # if both numbers are single digits, get the product
+    if num_1 < 10 and num_2 < 10:
+        product = num_1 * num_2
+        return product
+
+    else:
+        if num_1 > num_2:
+            n = int(len(str(num_1)))
+        else:
+            n = int(len(str(num_2)))
+        # print(n)
+        # print(num_1)
+        # print(num_2)
+        if len(str(num_1)) > len(str(num_2)):
+            x1 = int(str(num_1)[:int(math.floor(n / 2))])
+            x2 = int(str(num_1)[int(math.floor(n / 2)):])
+            y1 = 0
+            y2 = num_2
+        elif len(str(num_1)) < len(str(num_2)):
+            x1 = 0
+            x2 = num_1
+            y1 = int(str(num_2)[:int(math.floor(n/2))])
+            y2 = int(str(num_2)[int(math.floor(n/2)):])
+        else:
+            x1 = int(str(num_1)[:int(math.floor(n/2))])
+            x2 = int(str(num_1)[int(math.floor(n/2)):])
+            y1 = int(str(num_2)[:int(math.floor(n/2))])
+            y2 = int(str(num_2)[int(math.floor(n/2)):])
+        # print(x1, x2, y1, y2)
+        a = karatsuba(x1, y1)
+        b = karatsuba(x2, y2)
+        c = karatsuba((x1+x2), (y1+y2)) - a - b
+        # print(a, b, c, n)
+        x = (10**(2*math.ceil(n/2)))*a
+        # print(math.ceil(n/2))W
+        y = (10**(math.ceil(n/2)))*c
+        # print(x, y)
+        result = x + y + b
+        print(result)
+    return result
+
+if __name__ == '__main__':
+    karatsuba(1234, 5678)
+

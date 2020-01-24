@@ -15,7 +15,7 @@ class Cluster:
 		self.graph = {}
 		self.graph = sorted_graph 
 		self.clustersize = clustersize
-		self.nodes = nodes
+		self.nodes = nodes #numer of nodes
 		self.spacing = []
 	def findSet(self, node):
 		if node != self.parents[node]:

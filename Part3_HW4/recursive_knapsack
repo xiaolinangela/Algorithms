@@ -1,0 +1,33 @@
+import sys
+from itertools import islice
+def knapsack(W, weight, val, n):
+    #print(W)
+    if n == 0 or W == 0:
+        return 0
+    if weight[n - 1] > W:
+        return knapsack(W, weight, val, n-1)
+    else:
+        return max(val[n-1] + knapsack(W-weight[n-1], weight, val, n-1), knapsack(W, weight, val, n-1))
+
+def main():
+    if len(sys.argv) == 2:
+        txt = sys.argv[1]
+        with open(txt, 'r') as f:
+            for line in islice(f,0,1):
+                max_weight = int(line.split()[0])
+                total_items = int(line.split()[1])
+            val = []
+            weight = []
+            for line in islice(f,0,None):
+                v = int(line.split()[0])
+                w = int(line.split()[1])
+                val.append(v)
+                weight.append(w)
+
+        #print(nums)W, weight, val, n
+        print(knapsack(max_weight, weight, val, total_items))
+    else:
+        print("Error")
+
+if __name__ == "__main__":
+    main()
